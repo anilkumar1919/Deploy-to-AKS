@@ -37,7 +37,7 @@ stages:
         containerRegistry: 'Mykksss25652'
         repository: '$(imageRepository)'
         command: 'buildAndPush'
-        Dockerfile: '**/Dockerfile'
+        Dockerfile: '$(Build.SourcesDirectory)/app/Dockerfile'
         tags: '$(tag)'
 
     - upload: manifests
@@ -60,16 +60,19 @@ stages:
           - task: KubernetesManifest@0
             displayName: Create imagePullSecret
             inputs:
-              action: createSecret
-              secretName: $(imagePullSecret)
-              dockerRegistryEndpoint: $(dockerRegistryServiceConnection)
+              action: 'createSecret'
+              kubernetesServiceConnection: 'myAksconnect0215'
+              namespace: 'myfailure'
+              secretType: 'dockerRegistry'
+              secretName: '$(imagePullSecret)'
+              dockerRegistryEndpoint: 'Mykksss25652'
 
           - task: KubernetesManifest@0
             displayName: Deploy to Kubernetes cluster
             inputs:
               action: 'deploy'
-              kubernetesServiceConnection: 'Myakspr23543567-default'
-              namespace: 'mysampleee'
+              kubernetesServiceConnection: 'myAksconnect0215'
+              namespace: 'mysample021'
               manifests: |
                 $(Pipeline.Workspace)/manifests/deployment.yml
                 $(Pipeline.Workspace)/manifests/service.yml
