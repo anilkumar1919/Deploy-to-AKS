@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: anilkumardeploytoaks 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: anilkumardeploytoaks
+  template:
+    metadata:
+      labels:
+        app: anilkumardeploytoaks 
+    spec:
+      containers:
+        - name: anilkumardeploytoaks 
+          image: mykksss25652.azurecr.io/anilkumardeploytoaks
+          ports:
+          - containerPort: 80
