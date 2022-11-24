@@ -49,10 +49,10 @@ stages:
 
   jobs:
   - deployment: Deploy
-    displayName: Deploy
+    displayName: Deploy to Aks
+    environment: 'k8sdev.default'
     pool:
-      vmImage: $(vmImageName)
-    environment: 'anilkumar1919DeploytoAKS.default'
+      vmImage: ubuntu-latest
     strategy:
       runOnce:
         deploy:
@@ -62,9 +62,9 @@ stages:
             inputs:
               action: 'createSecret'
               kubernetesServiceConnection: 'myAksconnect0215'
-              namespace: 'myfailure01'
-              secretType: 'generic'
-              secretName: '$(imagePullSecret)'
+              namespace: 'myfailure02'
+              secretType: 'dockerRegistry'
+              secretName: '$(acrsecret)'
 
           - task: KubernetesManifest@0
             displayName: Deploy to Kubernetes cluster
