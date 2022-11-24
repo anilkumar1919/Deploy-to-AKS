@@ -14,7 +14,7 @@ variables:
   dockerRegistryServiceConnection: 'c6c55bb1-264c-423a-b9a1-c331e2fa1116'
   imageRepository: 'anilkumardeploytoaks'
   containerRegistry: 'mykksss25652.azurecr.io'
-  dockerfilePath: '**/Dockerfile'
+  dockerfilePath: '$(Build.SourcesDirectory)/app/Dockerfile'
   tag: '$(Build.BuildId)'
   imagePullSecret: 'mykksss256520c3a-auth'
 
@@ -62,10 +62,9 @@ stages:
             inputs:
               action: 'createSecret'
               kubernetesServiceConnection: 'myAksconnect0215'
-              namespace: 'myfailure'
-              secretType: 'dockerRegistry'
+              namespace: 'myfailure01'
+              secretType: 'generic'
               secretName: '$(imagePullSecret)'
-              dockerRegistryEndpoint: 'Mykksss25652'
 
           - task: KubernetesManifest@0
             displayName: Deploy to Kubernetes cluster
